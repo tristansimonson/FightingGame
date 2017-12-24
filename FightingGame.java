@@ -107,15 +107,13 @@ class FightingGame{
      */
     public static void enemyAction(Character user, Character enemy){
         // randomly choose action for enemy
-	int r = getRandom();
-	// attack
-        if(r == 1){
-            System.out.println("Enemy attacking...");
-            attack(enemy, user);
-	    System.out.println("\n"); 
+	int r = getRandom(3,1);
+	// make the enemy a little bit smarter, no healing when full health
+	if(enemy.health == 100){
+	    r = getRandom(3,2);
 	}
 	// heal
-   	if(r == 2){
+   	if(r == 1){
             System.out.println("Enemy healing...");
 	    if(enemy.health < 100){
 		if(enemy.health >= 95){
@@ -126,6 +124,12 @@ class FightingGame{
 	        }
 	    }
 	    System.out.println("Enemy health at: " + enemy.health);
+	    System.out.println("\n"); 
+	}
+	// attack
+        if(r == 2){
+            System.out.println("Enemy attacking...");
+            attack(enemy, user);
 	    System.out.println("\n"); 
 	}
 	// block
@@ -139,9 +143,9 @@ class FightingGame{
     /**method gets random number to decide action of enemy
      * @return n the random number
      */
-    public static int getRandom(){
+    public static int getRandom(int max, int min){
         Random r = new Random();
-   	int n = r.nextInt((3-1)+1) + 1;
+   	int n = r.nextInt((max-min) + 1) + min;
 	return n;
     }
 
