@@ -1,6 +1,7 @@
 /**game where user creates character and fights preset enemy
  * @author Tristan Simonson
- * @version 1.1
+ * @version 1.2
+ * game now includes weapons
  */
 
 import java.util.Scanner;
@@ -12,13 +13,30 @@ class FightingGame{
      * @returns userCharacter the user's champion
      */
     public static Character startGame(){
-        System.out.println("----character----");
+        // create character
+	System.out.println("----character----");
 	String cChoice = askForInput("Enter a name for your character!");
+	Character userCharacter = new Character(cChoice, 5, 100);
 	System.out.println(cChoice + " is your champion!");
         System.out.println("\n");
 
-	Character userCharacter = new Character(cChoice, 10, 100);
-	return userCharacter;
+	// choose weapon
+	System.out.println("----weapon----");
+	String wChoice = askForInput("Choose a gun or a sword!");
+	if(wChoice.equals("gun") || wChoice.equals("Gun")){
+	    wChoice = "Gun";
+	    Weapon gun = new Weapon("gun", 15, 1);
+	    userCharacter.weapon = gun;
+	}
+        // incorrect input will be defered to the option of a sword
+	else{
+	    wChoice = "Sword";
+	    Weapon sword = new Weapon("sword", 10, 10);
+	    userCharacter.weapon = sword;
+	}
+	System.out.println(wChoice + " is your weapon!");
+        System.out.println("\n");
+        return userCharacter;
     }
     
     /**takes action by user and executes effects of action
@@ -158,15 +176,23 @@ class FightingGame{
     public static void attack(Character er, Character ed){
 	if(ed.isBlocking == true){
 	    ed.isBlocking = false;
-	    ed.health -= er.damage / 2;
+	    // statement for if user is being attacked
+	    if(ed.weapon != null){
+	        ed.health -= er.damage - ed.weapon.blockingPower;
+	    }
+	    // statement for if enemy is being attacked
+	    else{
+	        ed.health -= er.damage / 2;
+	    }
 	}
 	else{
 	    ed.health -= er.damage;
     	}
-	System.out.println(ed.name + " health at: " + ed.health);
 	if(ed.health <= 0){
+	    System.out.println(ed.name + " health at: 0");
 	    endGame();
 	}    
+	System.out.println(ed.name + " health at: " + ed.health);
     }
 
     // game over when a character's health reaches zero
@@ -187,6 +213,7 @@ class Character{
     String name;
     int damage;
     int health;
+    Weapon weapon;
     boolean isBlocking = false;
     
     /**constructor for characters
@@ -200,3 +227,21 @@ class Character{
         this.health = health;
     }
 }// class Character
+
+// class to handle weapons
+class Weapon{
+    String name;
+    int damage;
+    int blockingPower;
+    
+    /**constructor for weapons
+     * @param name what weapon is referred to as
+     * @param damage numerical value of damage weapon can deal
+     * @param blockingPower damage weapon can prevent when blocking
+     */
+    Weapon(String name, int damage, int blockingPower){
+        this.name = name;
+        this.damage = damage;
+	this.blockingPower = blockingPower;
+    }
+}// class Weapon
