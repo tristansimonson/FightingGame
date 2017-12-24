@@ -186,8 +186,15 @@ class FightingGame{
 	    }
 	}
 	else{
-	    ed.health -= er.damage;
-    	}
+	    // statement for if attacker has weapon
+	    if(er.weapon != null){
+	        ed.health -= er.damage + er.weapon.damage;
+	    }
+	    // attacker has no weapon
+	    else{
+	        ed.health -= er.damage;
+    	    }
+	}
 	if(ed.health <= 0){
 	    System.out.println(ed.name + " health at: 0");
 	    endGame();
