@@ -22,17 +22,22 @@ class FightingGame{
 
 	// choose weapon
 	System.out.println("----weapon----");
-	String wChoice = askForInput("Choose a gun or a sword!");
+	String wChoice = askForInput("Choose: gun, sword, or shield!");
 	if(wChoice.equals("gun") || wChoice.equals("Gun")){
 	    wChoice = "Gun";
 	    Weapon gun = new Weapon("gun", 15, 1);
 	    userCharacter.weapon = gun;
 	}
-        // incorrect input will be defered to the option of a sword
-	else{
+	if(wChoice.equals("sword") || wChoice.equals("Sword")){
 	    wChoice = "Sword";
 	    Weapon sword = new Weapon("sword", 10, 10);
 	    userCharacter.weapon = sword;
+	}
+        // incorrect input will be defered to the option of a shield
+	else{
+	    wChoice = "Shield";
+	    Weapon shield = new Weapon("shield", 0, 20);
+	    userCharacter.weapon = shield;
 	}
 	System.out.println(wChoice + " is your weapon!");
         System.out.println("\n");
