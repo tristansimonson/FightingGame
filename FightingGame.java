@@ -1,7 +1,7 @@
-/**game where user creates character and fights preset enemy
+/**user creates character, chooses weapon, and fights preset enemy
  * @author Tristan Simonson
- * @version 1.2
- * game now includes weapons
+ * @version 1.3
+ * game now includes chance for critical hits
  */
 
 import java.util.Scanner;
@@ -149,6 +149,19 @@ class FightingGame{
 	return n;
     }
 
+    /**determines if attack will be a critical hit, adds 10 damage to attack
+     * @returns true or false boolean for if attack is critical or not
+     */
+    public static boolean criticalHit(){
+        int x = getRandom(10, 1);
+        int y = getRandom(10, 1);
+        if(x == y){
+     	    System.out.println("CRITICAL HIT");
+	    return true;
+        }
+        return false;
+    }
+
     /**method that asks for input from user, for choosing things
      * @param question question that you want user's answer to
      * @return n the choice of the user
@@ -183,7 +196,14 @@ class FightingGame{
      * @param ed character who is attacked
      */
     public static void attack(Character er, Character ed){
-	if(ed.isBlocking == true){
+	// check if attack will be critical hit
+ 	boolean critical = criticalHit();
+	// compensate for critical hit being landed
+        if(critical == true){
+	    er.damage += 10;
+	}
+        // if attacked blocking less damage dealt
+        if(ed.isBlocking == true){
 	    ed.isBlocking = false;
 	    // statement for if user is being attacked
 	    if(ed.weapon != null){
@@ -207,7 +227,11 @@ class FightingGame{
 	if(ed.health <= 0){
 	    System.out.println(ed.name + " health at: 0");
 	    endGame();
-	}    
+	}
+	// adjust critical compensation if made earlier
+	if(critical == true){
+	    er.damage -= 10;    
+	}
 	System.out.println(ed.name + " health at: " + ed.health);
     }
 
