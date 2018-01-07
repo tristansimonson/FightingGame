@@ -1,14 +1,28 @@
 /**user creates character, chooses weapon, and fights preset enemy
  * @author Tristan Simonson
- * @version 1.3
- * game now includes chance for critical hits
+ * @version 2.0
+ * gui integration underway
  */
 
 import java.util.Scanner;
 import java.util.Random;
+import java.awt.*;
+import java.awt.event.*;
 
 class FightingGame{
- 
+    public static Character u;   // user character holder used for getUser
+    public static Character e = new Character("Enemy", 25, 100);
+
+    // @returns u user character
+    public static Character getUser(){
+	return u;
+    } 
+
+    // @returns e enemy character
+    public static Character getEnemy(){
+        return e;
+    }
+
     /**initiates game by having user select character and weapon
      * @returns userCharacter the user's champion
      */
@@ -41,7 +55,8 @@ class FightingGame{
 	}
 	System.out.println(wChoice + " is your weapon!");
         System.out.println("\n");
-        return userCharacter;
+        u = userCharacter;    // set holder to user input
+	return userCharacter;
     }
     
     /**takes action by user and executes effects of action

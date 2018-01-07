@@ -23,18 +23,39 @@ public class GameAWT extends Frame implements ActionListener{
         btnAttack = new Button("Attack");
         btnHeal = new Button("Heal");
         btnBlock = new Button("Block");
+	btnAttack.addActionListener(this);
+	btnHeal.addActionListener(this);
+	btnBlock.addActionListener(this);
         add(btnAttack);
         add(btnHeal);
         add(btnBlock);
 
         setTitle("Fighting Game");
-        setSize(250,100);
+        setSize(400,200);
 
         setVisible(true);
     }
 
-   @Override
-   public void actionPerformed(ActionEvent e) {
- 
-   }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+     
+    //executes actions for when user action buttons pressed
+    public void fightingAction(String s){
+        if(s.equals("attack") || s.equals("Attack")){
+	    FightingGame.userAction("attack", FightingGame.getUser(),                                               FightingGame.getEnemy());
+	}
+	if(s.equals("heal") || s.equals("Heal")){
+	    FightingGame.userAction("heal", FightingGame.getUser(),                                                 FightingGame.getEnemy());
+	}
+	if(s.equals("block") || s.equals("Block")){
+	    FightingGame.userAction("block", FightingGame.getUser(),                                                FightingGame.getEnemy());
+	}
+    }
+
+    //for testing
+    public static void main(String[] args){
+        GameAWT app = new GameAWT();
+    }
 }// class GameAWT
