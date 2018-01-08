@@ -15,12 +15,16 @@ class FightingGame{
 
     // @returns u user character
     public static Character getUser(){
+	if(u == null){
+	    Character tempU = new Character("Temp", 0, 100);
+	    return tempU;  
+	}
 	return u;
     } 
 
     // @returns e enemy character
     public static Character getEnemy(){
-        return e;
+	return e;
     }
 
     /**initiates game by having user select character and weapon

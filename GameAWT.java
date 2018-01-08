@@ -15,10 +15,11 @@ public class GameAWT extends Frame implements ActionListener{
     public GameAWT(){
         setLayout(new FlowLayout());
 
-        lblUserHealth = new Label("User Health");
-        lblEnemyHealth = new Label("Enemy Health");
+        lblUserHealth = new Label("User Health: " +                                                                FightingGame.getUser().health);
         add(lblUserHealth);
-        add(lblEnemyHealth);
+
+  	lblEnemyHealth = new Label("Enemy Health: " +                                                               FightingGame.getEnemy().health);
+	add(lblEnemyHealth);
 
         btnAttack = new Button("Attack");
         btnHeal = new Button("Heal");
